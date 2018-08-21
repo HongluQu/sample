@@ -105,7 +105,7 @@ class UsersController extends Controller
     $to = $user->email;
     $subject = '感谢注册，请确认激活邮件！';
     Mail::send($view, $data, function($message) use ($form, $name, $to, $subject) {
-      $message->from($form, $name)->to($to)->subject($subject);
+      $message->to($to)->subject($subject);
     });
   }
 }
