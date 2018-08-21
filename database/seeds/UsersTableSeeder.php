@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $user->email = 'maple@sample.test';
         $user->password = bcrypt('@WSX3edc');
         $user->is_admin = true;
+        $user->activated = true;
         $user->save();
     }
 }

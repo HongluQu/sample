@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Email;
 
 class SessionsController extends Controller
 {
@@ -27,9 +28,19 @@ class SessionsController extends Controller
     ]);
     if (Auth::attempt($credentials, $request->has('remember')))
     {
-      // Login succ
-      session()->flash('success', '欢迎回来！');
-      return redirect()->route('users.show', [Auth::user()]);
+      if(Auth::user()->activated)
+      {
+        // Login succ
+        session()->flash('success', '欢迎回来！');
+        return redirect()->route('users.show', [Auth::user()]);
+      }
+      else
+      {
+        Auth::logout();
+        session()->flash('warning', '您的账号未激活，请检查激活邮件进行激活。');
+        return redirect('/');
+      }
+
     }
     else
     {
